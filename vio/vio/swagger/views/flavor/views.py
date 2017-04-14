@@ -46,7 +46,6 @@ class FlavorsView(APIView):
         flavor_name = create_req.get('name', None)
         flavor_id = create_req.get('id', None)
         flavors_op = OperateFlavors.OperateFlavors()
-        exist = False
         try:
             target = flavor_id or flavor_name
             flavor = flavors_op.find_flavor(data, tenantid, target)
@@ -54,7 +53,6 @@ class FlavorsView(APIView):
                 flavor, extra_specs = flavors_op.get_flavor(
                     data, tenantid, flavor.id)
                 rsp['returnCode'] = 0
-                exist = True
             else:
                 rsp['returnCode'] = 1
                 flavor, extra_specs = flavors_op.create_flavor(
